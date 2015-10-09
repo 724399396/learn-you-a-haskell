@@ -1,15 +1,29 @@
 import System.Random
+import Control.Monad.State
+import Control.Monad.Writer
 
-threeCoins :: StdGen -> (Bool, Bool, Bool)
-threeCoins gen =
-  let (firstCoin, newGen) = random gen
-      (secondCoind, newGen') = random newGen
-      (thirdCoin, newGen'') = random newGen'
-  in (firstCoin,secondCoind,thirdCoin)
+randomSt :: (RandomGen g, Random a) => State g a
+randomSt = state random
 
-finiteRandoms :: (RandomGen g, Random a, Num n) => n -> g -> ([a], g)
-finiteRandoms 0 gen = ([], gen)
-finiteRandoms n gen =
-  let (value, newGen) = random gen
-      (restOfList, finalGen) = finiteRandoms (n-1) newGen
-  in (value:restOfList, finalGen)
+threeCoins :: State StdGen (Bool,Bool,Bool)
+threeCoins = do
+  a <- randomSt
+  b <- randomSt
+  c <- randomSt
+  return (a,b,c)
+
+ap' :: (Monad m) => m (a -> b) -> m a -> m b
+ap' mf m = do
+  f <- mf
+  x <- m
+  return (f x)
+
+keepSmall :: Int -> Writer [String] Bool
+keepSmall x
+  | x < 4 = do
+    tell ["Keeping " ++ show x]
+    return True
+  | otherwise = do
+    tell [show x ++ " is too large, throwing it away"]
+    return False
+>>>>>>> 59ac1c29f42a694fbd8b9edc95226c548d737ba8
