@@ -26,3 +26,4 @@ keepSmall x
   | otherwise = do
     tell [show x ++ " is too large, throwing it away"]
     return False
+>>>>>>> 59ac1c29f42a694fbd8b9edc95226c548d737ba8

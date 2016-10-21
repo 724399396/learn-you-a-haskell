@@ -174,3 +174,10 @@ data Barry t k p = Barry { yabba :: p, dabba :: t k }
 
 instance Functor (Barry a b) where
   fmap f (Barry {yabba = x, dabba = y}) = Barry {yabba = f x, dabba = y}
+
+withFile' :: FilePath -> IOMode -> (Handle -> IO a) -> IO a
+withFile' path mode f = do
+  handle <- openFile path mode
+  result <- f handle
+  hClose handle
+  return result
