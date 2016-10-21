@@ -29,6 +29,9 @@ factorial' n = n * factorial' (n - 1)
 addVectors :: (Num a) => (a,a) -> (a,a) -> (a,a)
 addVectors (x1,y1) (x2,y2) = (x1 + x2, y1 + y2)
 
+first :: (a,b,c) -> a
+first (x, _, _) = x
+
 head' :: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
 head' (x:_) = x
@@ -38,6 +41,20 @@ tell [] = "The list is empty"
 tell (x:[]) = "The list has one element: " ++ show x
 tell (x:y:[]) = "The list has two elements: " ++ show x ++ " and " ++ show y
 tell (x:y:_) = "This lift is long. The first two elements are: " ++ show x ++ " and " ++ show y
+
+length' :: (Num b) => [a] -> b
+length' [] = 0
+length' (_:xs) = 1 + length' xs    
+
+max' a b
+    | a > b     = a
+    | otherwise = b    
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+          | a > b     = GT
+          | a == b    = EQ
+          | otherwise = LT
 
 bmiTell :: (RealFloat a) => a -> a -> String
 bmiTell weight height
@@ -113,8 +130,8 @@ multThree x y z = x * y * z
 compareWithHundred :: (Num a, Ord a) => a -> Ordering
 compareWithHundred = compare 100
 
-divedeByTen :: (Floating a) => a -> a
-divedeByTen = (/10)
+divideByTen :: (Floating a) => a -> a
+divideByTen = (/10)
 
 isUpperAlphanum :: Char -> Bool
 isUpperAlphanum = (`elem` ['A'..'Z'])

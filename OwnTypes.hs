@@ -168,7 +168,7 @@ class Tofu t where
 data Frank a b = Frank {frankField :: b a} deriving (Show)
 
 instance Tofu Frank where
-  tofu x = Frank x
+  tofu = Frank
 
 data Barry t k p = Barry { yabba :: p, dabba :: t k }
 

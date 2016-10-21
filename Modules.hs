@@ -18,7 +18,7 @@ encode shift msg =
       shifted = map (+ shift) ords
   in map chr shifted
 
-decond shift msg = encode (negate shift) msg
+decode shift msg = encode (negate shift) msg
 
 findKey :: (Eq k) => k -> [(k,v)] -> Maybe v
 findKey key = foldr (\(k,v) acc -> if key == k then Just v else acc) Nothing
@@ -42,3 +42,5 @@ phoneBookToMap xs = Map.fromListWith (\number1 number2 -> number1 ++ ", " ++ num
 text1 = "I Just had an  anime dream. Anime... Reality... Are they so different?"
 text2 = "The old man left his garbage can out and now his trash is all over my lawn!"
 
+fromList' :: (Ord k) => [(k,v)] -> Map.Map k v
+fromList' = foldr (\(k,v) acc -> Map.insert k v acc) Map.empty

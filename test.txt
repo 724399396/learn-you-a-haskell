@@ -1,0 +1,1 @@
+test' x y n = n will match for every call, the other patterns won't be considered. I think this case should be test' "" "" n = n. You get the same result if you move your original line at the end (when all other cases fail), but then you should write test' _ _ n = n which shows that you deliberately ignore some of the arguments.
