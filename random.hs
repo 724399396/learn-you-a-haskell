@@ -2,6 +2,9 @@ import System.Random
 import Control.Monad.State
 import Control.Monad.Writer
 
+randoms' :: (RandomGen g, Random a) => g => [a]
+randoms' gen = let (value, newGen) = random gen in value : randoms' newGen
+
 randomSt :: (RandomGen g, Random a) => State g a
 randomSt = state random
 
@@ -26,4 +29,3 @@ keepSmall x
   | otherwise = do
     tell [show x ++ " is too large, throwing it away"]
     return False
->>>>>>> 59ac1c29f42a694fbd8b9edc95226c548d737ba8
